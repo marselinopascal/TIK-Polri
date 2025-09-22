@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin - Kelola Berita & Konsultasi TTE</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'polri-blue': '#1e40af',
+            'polri-dark': '#1e3a8a',
+            'polri-gold': '#fbbf24',
+            'ink': '#0f172a'
+          },
+          fontFamily: { inter: ['Inter', 'sans-serif'] },
+          boxShadow: {
+            soft: '0 10px 30px rgba(15, 23, 42, 0.08)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";}
+    .glass { background: rgba(255,255,255,.6); backdrop-filter: blur(8px);}
+    .hover-lift { transition: transform .2s ease, box-shadow .2s ease;}
+    .hover-lift:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(2, 6, 23, 0.12);}
+    .fade-in { animation: fade .35s ease;}
+    @keyframes fade { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: translateY(0);} }
+    .badge { padding:.25rem .6rem; border-radius:9999px; font-size:.75rem; font-weight:600; }
+    .chip { padding:.25rem .55rem; border-radius:10px; font-size:.75rem; font-weight:600; }
+    .switch:checked + .switch-dot { transform: translateX(1.25rem); }
+    .switch:checked ~ .switch-track { background-color: #16a34a; }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+
+  <!-- Top Bar -->
+  <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="h-16 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-polri-blue to-polri-dark flex items-center justify-center shadow-soft">
+            <svg class="w-7 h-7 text-polri-gold" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2 2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7L12 2z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="text-ink font-extrabold text-lg leading-tight">Admin TIK POLRI</div>
+            <div class="text-slate-500 text-xs -mt-0.5">Kelola Berita & Konsultasi TTE</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="exportAllBtn" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 hover-lift">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 10 5-5 5 5M12 5v14"/></svg>
+            Export Semua (CSV)
+          </button>
+          <div class="h-9 w-px bg-slate-200 mx-1"></div>
+          <div class="flex items-center gap-3">
+            <span class="hidden sm:inline text-sm text-slate-600">Admin</span>
+            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-yellow-400 to-amber-500 text-white grid place-items-center font-bold shadow-soft">A</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+
+    <!-- Tabs -->
+    <div class="mb-6">
+      <div class="inline-flex bg-white rounded-xl p-1 border border-slate-200 shadow-soft">
+        <button id="tabNews" class="tab-btn px-4 sm:px-6 py-2 rounded-lg text-sm font-semibold bg-polri-blue text-white">Berita</button>
+        <button id="tabTTE" class="tab-btn px-4 sm:px-6 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-100">Konsultasi TTE</button>
+        <button id="tabAppt" class="tab-btn px-4 sm:px-6 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-100">Janji Temu</button>
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <section class="grid md:grid-cols-3 gap-6 mb-8">
+      <div class="bg-white rounded-2xl p-6 shadow-soft hover-lift">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-slate-500 text-sm">Total Berita</div>
+            <div id="statNews" class="text-3xl font-extrabold text-ink mt-1">0</div>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 grid place-items-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h9l5 5v8a2 2 0 0 1-2 2z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-soft hover-lift">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-slate-500 text-sm">Konsultasi Masuk</div>
+            <div id="statTTE" class="text-3xl font-extrabold text-ink mt-1">0</div>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 grid place-items-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 10h8m-8 4h5M3 7a2 2 0 0 1 2-2h9l5 5v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-soft hover-lift">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-slate-500 text-sm">Proses Hari Ini</div>
+            <div id="statToday" class="text-3xl font-extrabold text-ink mt-1">0</div>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 grid place-items-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Berita -->
+    <section id="newsSection" class="fade-in">
+      <!-- Controls -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-soft p-5 mb-6">
+        <div class="flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
+          <div class="flex flex-wrap gap-3">
+            <button id="addNewsBtn" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-polri-blue text-white text-sm font-semibold hover:bg-polri-dark hover-lift">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"/></svg>
+              Tambah Berita
+            </button>
+            <select id="filterNewsCategory" class="px-3 py-2 rounded-lg border-2 border-slate-200 text-sm focus:outline-none focus:border-polri-blue">
+              <option value="">Semua Kategori</option>
+              <option value="Teknologi">Teknologi</option>
+              <option value="Keamanan">Keamanan</option>
+              <option value="Sistem">Sistem</option>
+              <option value="Pelatihan">Pelatihan</option>
+            </select>
+            <select id="filterNewsStatus" class="px-3 py-2 rounded-lg border-2 border-slate-200 text-sm focus:outline-none focus:border-polri-blue">
+              <option value="">Semua Status</option>
+              <option value="Draft">Draft</option>
+              <option value="Published">Published</option>
+            </select>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="relative">
+              <input id="searchNewsInput" type="text" placeholder="Cari berita..." class="pl-9 pr-3 py-2 rounded-lg border-2 border-slate-200 text-sm focus:outline-none focus:border-polri-blue w-64">
+              <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"/></svg>
+            </div>
+            <button id="exportNewsBtn" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 hover-lift">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m7 10 5-5 5 5M12 5v14"/></svg>
+              Export (CSV)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-soft overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm">
+            <thead class="bg-slate-50 text-slate-600">
+              <tr>
+                <th class="text-left font-semibold px-5 py-3">Judul</th>
+                <th class="text-left font-semibold px-5 py-3">Kategori</th>
+                <th class="text-left font-semibold px-5 py-3">Tanggal</th>
+                <th class="text-left font-semibold px-5 py-3">Status</th>
+                <th class="text-right font-semibold px-5 py-3">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="newsTableBody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+        <div id="newsEmpty" class="hidden p-8 text-center text-slate-500">Belum ada berita. Tambahkan berita pertama Anda.</div>
+      </div>
+    </section>
+
+    <!-- Konsultasi TTE -->
+    <section id="tteSection" class="hidden fade-in">
+      <!-- Controls -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-soft p-5 mb-6">
+        <div class="flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
+          <div class="flex flex-wrap gap-3">
+            <select id="filterTTEStatus" class="px-3 py-2 rounded-lg border-2 border-slate-200 text-sm focus:outline-none focus:border-polri-blue">
+              <option value="">Semua Status</option>
+              <option value="Baru">Baru</option>
+              <option value="Ditinjau">Ditinjau</option>
+              <option value="Dijadwalkan">Dijadwalkan</option>
+              <option value="Selesai">Selesai</option>
+              <option value="Ditolak">Ditolak</option>
+            </select>
+            <select id="filterTTEType" class="px-3 py-2 rounded-lg border-2 border-slate-200 text-sm focus:outline-none focus:border-polri-blue">
+              <option value="">Semua Jenis</option>
+              <option value="Implementasi">Implementasi</option>
+              <option value="Keamanan">Keamanan</option>
+              <option value="Regulasi">Regulasi</option>
+              <option value="Integrasi">Integrasi</option>
+              <option value="Pelatihan">Pelatihan</option>
+              <option value="Teknis">Teknis</option>
+            </select>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="relative">
+              <input id="searchTTEInput" type="text" placeholder="Cari konsultasi..." class="pl-9 pr-3 py-2 rounded-lg border-2 border-slate-200 text-sm focus:outline-none focus:border-polri-blue w-64">
+              <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"/></svg>
+            </div>
+            <button id="exportTTEBtn" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 hover-lift">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m7 10 5-5 5 5M12 5v14"/></svg>
+              Export (CSV)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-soft overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm">
+            <thead class="bg-slate-50 text-slate-600">
+              <tr>
+                <th class="text-left font-semibold px-5 py-3">Pemohon</th>
+                <th class="text-left font-semibold px-5 py-3">Instansi</th>
+                <th class="text-left font-semibold px-5 py-3">Jenis</th>
+                <th class="text-left font-semibold px-5 py-3">Diajukan</th>
+                <th class="text-left font-semibold px-5 py-3">Status</th>
+                <th class="text-right font-semibold px-5 py-3">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tteTableBody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+        <div id="tteEmpty" class="hidden p-8 text-center text-slate-500">Belum ada permohonan konsultasi.</div>
+      </div>
+    </section>
+
+    <!-- Janji Temu -->
+    <section id="apptSection" class="hidden fade-in">
+      <!-- Controls -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-soft p-5 mb-6">
+        <div class="flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
+          <div class="flex flex-wrap gap-3">
+            <button id="addApptBtn" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-polri-blue text-white text-sm font-semibold hover:bg-polri-dark hover-lift">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"/></svg>
+              Tambah Janji
+            </button>
+            <select id="filterApptStatus" class="px-3 py-2 rounded-lg border-2 border-slate-200 text-sm focus:outline-none focus:border-polri-blue">
+              <option value="">Semua Status</option>
+              <option>Direncanakan</option>
+              <option>Dikonfirmasi</option>
+              <option>Selesai</option>
+              <option>Dibatalkan</option>
+            </select>
+            <input id="filterApptDate" type="date" class="px-3 py-2 rounded-lg border-2 border-slate-200 text-sm focus:outline-none focus:border-polri-blue" />
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="relative">
+              <input id="searchApptInput" type="text" placeholder="Cari janji temu..." class="pl-9 pr-3 py-2 rounded-lg border-2 border-slate-200 text-sm focus:outline-none focus:border-polri-blue w-64">
+              <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"/></svg>
+            </div>
+            <button id="exportApptBtn" class="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 hover-lift">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m7 10 5-5 5 5M12 5v14"/></svg>
+              Export (CSV)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-soft overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm">
+            <thead class="bg-slate-50 text-slate-600">
+              <tr>
+                <th class="text-left font-semibold px-5 py-3">Pemohon</th>
+                <th class="text-left font-semibold px-5 py-3">Instansi</th>
+                <th class="text-left font-semibold px-5 py-3">Tanggal</th>
+                <th class="text-left font-semibold px-5 py-3">Waktu</th>
+                <th class="text-left font-semibold px-5 py-3">Metode</th>
+                <th class="text-left font-semibold px-5 py-3">Status</th>
+                <th class="text-right font-semibold px-5 py-3">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="apptTableBody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+        <div id="apptEmpty" class="hidden p-8 text-center text-slate-500">Belum ada janji temu.</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- News Modal -->
+  <div id="newsModal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-soft max-w-xl w-full overflow-hidden fade-in">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+        <h3 id="newsModalTitle" class="font-extrabold text-lg text-ink">Tambah Berita</h3>
+        <button onclick="closeNewsModal()" class="text-slate-500 hover:text-slate-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <form id="newsForm" class="px-6 py-5 space-y-4">
+        <input type="hidden" id="newsId">
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1">Judul</label>
+          <input id="newsTitle" required class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-polri-blue" placeholder="Judul berita">
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Kategori</label>
+            <select id="newsCategory" required class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-polri-blue">
+              <option value="">Pilih</option>
+              <option>Teknologi</option>
+              <option>Keamanan</option>
+              <option>Sistem</option>
+              <option>Pelatihan</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Status</label>
+            <select id="newsStatus" required class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-polri-blue">
+              <option>Draft</option>
+              <option>Published</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1">Ringkasan</label>
+          <textarea id="newsSummary" rows="3" class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-polri-blue" placeholder="Ringkasan singkat..."></textarea>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1">Gambar (Unggah File)</label>
+          <input id="newsImageFile" type="file" accept="image/*" class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-polri-blue">
+          <p class="text-xs text-slate-500 mt-1">Unggah gambar (maksimal 2MB). Pratinjau akan tampil di bawah.</p>
+          <div class="mt-3 w-full">
+            <img id="newsImagePreview" alt="Pratinjau gambar" class="w-32 h-32 object-cover rounded-lg border border-slate-200" style="display:none;" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';">
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1">Konten</label>
+          <textarea id="newsContent" rows="5" class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-polri-blue" placeholder="Konten berita..."></textarea>
+        </div>
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button type="button" onclick="closeNewsModal()" class="px-4 py-2 rounded-lg border-2 border-slate-200 text-slate-700 font-semibold hover:bg-slate-50">Batal</button>
+          <button type="submit" class="px-4 py-2 rounded-lg bg-polri-blue text-white font-semibold hover:bg-polri-dark">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TTE Detail Modal -->
+  <div id="tteModal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-soft max-w-2xl w-full overflow-hidden fade-in">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+        <h3 class="font-extrabold text-lg text-ink">Detail Konsultasi TTE</h3>
+        <button onclick="closeTteModal()" class="text-slate-500 hover:text-slate-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="px-6 py-5 space-y-4">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <div class="text-xs text-slate-500">Nama</div>
+            <div id="dName" class="font-semibold text-ink"></div>
+          </div>
+          <div>
+            <div class="text-xs text-slate-500">Instansi</div>
+            <div id="dInstansi" class="font-semibold text-ink"></div>
+          </div>
+          <div>
+            <div class="text-xs text-slate-500">Email</div>
+            <div id="dEmail" class="font-semibold text-ink"></div>
+          </div>
+          <div>
+            <div class="text-xs text-slate-500">Telepon</div>
+            <div id="dPhone" class="font-semibold text-ink"></div>
+          </div>
+          <div>
+            <div class="text-xs text-slate-500">Jenis Konsultasi</div>
+            <div id="dType" class="font-semibold text-ink"></div>
+          </div>
+          <div>
+            <div class="text-xs text-slate-500">Diajukan</div>
+            <div id="dDate" class="font-semibold text-ink"></div>
+          </div>
+        </div>
+        <div>
+          <div class="text-xs text-slate-500 mb-1">Detail Kebutuhan</div>
+          <div id="dDetail" class="text-slate-700 whitespace-pre-line"></div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Status</label>
+            <select id="dStatus" class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-polri-blue">
+              <option>Baru</option>
+              <option>Ditinjau</option>
+              <option>Dijadwalkan</option>
+              <option>Selesai</option>
+              <option>Ditolak</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Catatan Internal</label>
+            <input id="dNote" class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-polri-blue" placeholder="Tambahkan catatan...">
+          </div>
+        </div>
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button type="button" onclick="deleteTteCurrent()" class="px-4 py-2 rounded-lg border-2 border-rose-200 text-rose-700 font-semibold hover:bg-rose-50">Hapus</button>
+          <button type="button" onclick="saveTteCurrent()" class="px-4 py-2 rounded-lg bg-polri-blue text-white font-semibold hover:bg-polri-dark">Simpan Perubahan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Appointment Modal -->
+  <div id="apptModal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-soft max-w-xl w-full overflow-hidden fade-in">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+        <h3 id="apptModalTitle" class="font-extrabold text-lg text-ink">Tambah Janji Temu</h3>
+        <button onclick="closeApptModal()" class="text-slate-500 hover:text-slate-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <form id="apptForm" class="px-6 py-5 space-y-4">
+        <input type="hidden" id="apptId">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Nama Pemohon</label>
+            <input id="apptName" required class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-polri-blue" placeholder="Nama lengkap">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Instansi</label>
+            <input id="apptInstitution" required class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-polri-blue" placeholder="Nama instansi">
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Tanggal</label>
+            <input id="apptDate" type="date" required class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-polri-blue">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Waktu</label>
+            <input id="apptTime" type="time" required class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-polri-blue">
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Metode</label>
+            <select id="apptMethod" class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-polri-blue">
+              <option>Online</option>
+              <option>Offline</option>
+              <option>Hybrid</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Status</label>
+            <select id="apptStatus" class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-polri-blue">
+              <option>Direncanakan</option>
+              <option>Dikonfirmasi</option>
+              <option>Selesai</option>
+              <option>Dibatalkan</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1">Catatan</label>
+          <textarea id="apptNote" rows="3" class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-polri-blue" placeholder="Catatan tambahan..."></textarea>
+        </div>
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button type="button" onclick="closeApptModal()" class="px-4 py-2 rounded-lg border-2 border-slate-200 text-slate-700 font-semibold hover:bg-slate-50">Batal</button>
+          <button type="submit" class="px-4 py-2 rounded-lg bg-polri-blue text-white font-semibold hover:bg-polri-dark">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+    <div class="px-4 py-3 rounded-xl bg-emerald-600 text-white shadow-soft text-sm font-semibold">Tersimpan!</div>
+  </div>
+
+  <script>
+    // Data store (localStorage)
+    const LS_NEWS = 'adminNews';
+    const LS_TTE = 'adminTTE';
+    const LS_APPT = 'adminAppt';
+    let news = [];
+    let tte = [];
+    let appts = [];
+    let editingNewsId = null;
+    let currentTteId = null;
+    let editingApptId = null;
+
+    // Elements
+    const newsSection = document.getElementById('newsSection');
+    const tteSection = document.getElementById('tteSection');
+    const apptSection = document.getElementById('apptSection');
+    const tabNews = document.getElementById('tabNews');
+    const tabTTE = document.getElementById('tabTTE');
+    const tabAppt = document.getElementById('tabAppt');
+    const newsTableBody = document.getElementById('newsTableBody');
+    const tteTableBody = document.getElementById('tteTableBody');
+    const apptTableBody = document.getElementById('apptTableBody');
+    const newsEmpty = document.getElementById('newsEmpty');
+    const tteEmpty = document.getElementById('tteEmpty');
+    const apptEmpty = document.getElementById('apptEmpty');
+    const statNews = document.getElementById('statNews');
+    const statTTE = document.getElementById('statTTE');
+    const statToday = document.getElementById('statToday');
+
+    // Filters
+    const filterNewsCategory = document.getElementById('filterNewsCategory');
+    const filterNewsStatus = document.getElementById('filterNewsStatus');
+    const searchNewsInput = document.getElementById('searchNewsInput');
+    const filterTTEStatus = document.getElementById('filterTTEStatus');
+    const filterTTEType = document.getElementById('filterTTEType');
+    const searchTTEInput = document.getElementById('searchTTEInput');
+
+    const addApptBtn = document.getElementById('addApptBtn');
+    const filterApptStatus = document.getElementById('filterApptStatus');
+    const filterApptDate = document.getElementById('filterApptDate');
+    const searchApptInput = document.getElementById('searchApptInput');
+    const exportApptBtn = document.getElementById('exportApptBtn');
+
+    // Modals
+    const newsModal = document.getElementById('newsModal');
+    const tteModal = document.getElementById('tteModal');
+    const apptModal = document.getElementById('apptModal');
+    const newsModalTitle = document.getElementById('newsModalTitle');
+    const apptModalTitle = document.getElementById('apptModalTitle');
+
+    // News form
+    const newsForm = document.getElementById('newsForm');
+    const newsId = document.getElementById('newsId');
+    const newsTitle = document.getElementById('newsTitle');
+    const newsCategory = document.getElementById('newsCategory');
+    const newsStatus = document.getElementById('newsStatus');
+    const newsSummary = document.getElementById('newsSummary');
+    const newsContent = document.getElementById('newsContent');
+    const newsImageFile = document.getElementById('newsImageFile');
+    const newsImagePreview = document.getElementById('newsImagePreview');
+
+    // TTE detail fields
+    const dName = document.getElementById('dName');
+    const dInstansi = document.getElementById('dInstansi');
+    const dEmail = document.getElementById('dEmail');
+    const dPhone = document.getElementById('dPhone');
+    const dType = document.getElementById('dType');
+    const dDate = document.getElementById('dDate');
+    const dDetail = document.getElementById('dDetail');
+    const dStatus = document.getElementById('dStatus');
+    const dNote = document.getElementById('dNote');
+
+    // Appt form fields
+    const apptForm = document.getElementById('apptForm');
+    const apptId = document.getElementById('apptId');
+    const apptName = document.getElementById('apptName');
+    const apptInstitution = document.getElementById('apptInstitution');
+    const apptDate = document.getElementById('apptDate');
+    const apptTime = document.getElementById('apptTime');
+    const apptMethod = document.getElementById('apptMethod');
+    const apptStatus = document.getElementById('apptStatus');
+    const apptNote = document.getElementById('apptNote');
+
+    // Buttons
+    document.getElementById('addNewsBtn').addEventListener('click', () => openNewsModal());
+    document.getElementById('exportNewsBtn').addEventListener('click', () => exportCSV(news, 'berita'));
+    document.getElementById('exportTTEBtn').addEventListener('click', () => exportCSV(tte, 'konsultasi_tte'));
+    exportApptBtn.addEventListener('click', () => exportCSV(appts, 'janji_temu'));
+    addApptBtn.addEventListener('click', () => openApptModal());
+    document.getElementById('exportAllBtn').addEventListener('click', () => {
+      const merged = [
+        {section:'BERITA'},
+        ...news,
+        {section:'KONSULTASI_TTE'},
+        ...tte
+      ];
+      exportCSV(merged, 'admin_export_semua');
+    });
+
+    // Tabs
+    tabNews.addEventListener('click', () => switchTab('news'));
+    tabTTE.addEventListener('click', () => switchTab('tte'));
+    tabAppt.addEventListener('click', () => switchTab('appt'));
+    function switchTab(which) {
+      // hide all
+      newsSection.classList.add('hidden');
+      tteSection.classList.add('hidden');
+      apptSection.classList.add('hidden');
+      tabNews.classList.remove('bg-polri-blue','text-white');
+      tabTTE.classList.remove('bg-polri-blue','text-white');
+      tabAppt.classList.remove('bg-polri-blue','text-white');
+      // show selected
+      if (which === 'news') { newsSection.classList.remove('hidden'); tabNews.classList.add('bg-polri-blue','text-white'); return; }
+      if (which === 'tte') { tteSection.classList.remove('hidden'); tabTTE.classList.add('bg-polri-blue','text-white'); return; }
+      if (which === 'appt') { apptSection.classList.remove('hidden'); tabAppt.classList.add('bg-polri-blue','text-white'); return; }
+    }
+
+    // Load/Save LocalStorage
+    function loadData() {
+      try {
+        news = JSON.parse(localStorage.getItem(LS_NEWS) || '[]');
+        tte = JSON.parse(localStorage.getItem(LS_TTE) || '[]');
+        appts = JSON.parse(localStorage.getItem(LS_APPT) || '[]');
+      } catch { news = []; tte = []; appts = []; }
+    }
+    function saveNews() { localStorage.setItem(LS_NEWS, JSON.stringify(news)); }
+    function saveTTE() { localStorage.setItem(LS_TTE, JSON.stringify(tte)); }
+    function saveAppts() { localStorage.setItem(LS_APPT, JSON.stringify(appts)); }
+
+    // Seed sample data if empty (small)
+    function seedIfEmpty() {
+      const today = new Date().toISOString().split('T')[0];
+      if (!news.length) {
+        news = [
+          {id: uid(), title:'Peluncuran Sistem Keamanan Baru', category:'Keamanan', status:'Published', date: today, summary:'Sistem keamanan siber terbaru resmi diluncurkan.', content:'Detail peluncuran sistem keamanan...'},
+          {id: uid(), title:'Workshop TTE untuk Instansi', category:'Pelatihan', status:'Draft', date: today, summary:'Workshop TTE akan diselenggarakan bulan depan.', content:'Rangkaian agenda workshop TTE...'}
+        ];
+      }
+      if (!tte.length) {
+        tte = [
+          {id: uid(), name:'Budi Santoso', institution:'Pemda Kota', email:'budi@pemda.go.id', phone:'081234567890', type:'Implementasi', submitted: today, detail:'Ingin implementasi TTE untuk surat dinas.', status:'Baru', note:''},
+          {id: uid(), name:'Sari P', institution:'RSUD', email:'sari@rsud.go.id', phone:'081298765432', type:'Keamanan', submitted: today, detail:'Audit keamanan TTE dan SOP.', status:'Ditinjau', note:'Cek dokumen pekan ini'}
+        ];
+      }
+      if (!appts.length) {
+        appts = [
+          {id: uid(), name:'Budi Santoso', institution:'Pemda Kota', date: today, time:'10:00', method:'Online', status:'Direncanakan', note:'Sesi pengantar'},
+          {id: uid(), name:'Sari P', institution:'RSUD', date: today, time:'14:00', method:'Offline', status:'Dikonfirmasi', note:'Bawa dokumen' }
+        ];
+      }
+      saveNews(); saveTTE(); saveAppts();
+    }
+
+    // Render
+    function renderNews() {
+      const cat = filterNewsCategory.value.trim();
+      const st = filterNewsStatus.value.trim();
+      const q = searchNewsInput.value.trim().toLowerCase();
+
+      const rows = news.filter(n => {
+        const byCat = !cat || n.category === cat;
+        const bySt = !st || n.status === st;
+        const byQ = !q || (n.title.toLowerCase().includes(q) || (n.summary||'').toLowerCase().includes(q));
+        return byCat && bySt && byQ;
+      });
+
+      newsTableBody.innerHTML = '';
+      rows.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="px-5 py-3">
+            <div class="flex items-start gap-3">
+              <div class="w-16 h-16 rounded-lg overflow-hidden bg-slate-100 flex-shrink-0">
+                ${item.image ? `<img src="${item.image}" alt="Thumbnail" class="w-full h-full object-cover" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';">` : ''}
+              </div>
+              <div>
+                <div class="font-semibold text-ink">${escapeHtml(item.title)}</div>
+                <div class="text-xs text-slate-500 line-clamp-1">${escapeHtml(item.summary || '')}</div>
+              </div>
+            </div>
+          </td>
+          <td class="px-5 py-3"><span class="chip bg-blue-50 text-blue-700">${escapeHtml(item.category)}</span></td>
+          <td class="px-5 py-3 text-slate-700">${item.date}</td>
+          <td class="px-5 py-3">
+            ${item.status === 'Published' 
+              ? '<span class="badge bg-emerald-100 text-emerald-700">Published</span>'
+              : '<span class="badge bg-amber-100 text-amber-700">Draft</span>'}
+          </td>
+          <td class="px-5 py-3">
+            <div class="flex items-center gap-2 justify-end">
+              <button class="px-3 py-1.5 rounded-lg border-2 border-slate-200 text-slate-700 font-semibold hover:bg-slate-50" data-edit="${item.id}">Edit</button>
+              <button class="px-3 py-1.5 rounded-lg border-2 border-rose-200 text-rose-700 font-semibold hover:bg-rose-50" data-del="${item.id}">Hapus</button>
+              <button class="px-3 py-1.5 rounded-lg ${item.status==='Draft'?'bg-emerald-600 hover:bg-emerald-700':'bg-slate-600 hover:bg-slate-700'} text-white font-semibold" data-toggle="${item.id}">
+                ${item.status==='Draft'?'Publish':'Set Draft'}
+              </button>
+            </div>
+          </td>
+        `;
+        newsTableBody.appendChild(tr);
+      });
+
+      newsEmpty.classList.toggle('hidden', rows.length !== 0);
+      statNews.textContent = news.length;
+
+      // Actions
+      newsTableBody.querySelectorAll('[data-edit]').forEach(btn => btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-edit'); openNewsModal(id);
+      }));
+      newsTableBody.querySelectorAll('[data-del]').forEach(btn => btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-del'); deleteNews(id);
+      }));
+      newsTableBody.querySelectorAll('[data-toggle]').forEach(btn => btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-toggle'); toggleNewsStatus(id);
+      }));
+    }
+
+    function renderTTE() {
+      const st = filterTTEStatus.value.trim();
+      const tp = filterTTEType.value.trim();
+      const q = searchTTEInput.value.trim().toLowerCase();
+
+      const rows = tte.filter(r => {
+        const bySt = !st || r.status === st;
+        const byTp = !tp || r.type.toLowerCase() === tp.toLowerCase();
+        const byQ = !q || [r.name, r.institution, r.email, r.phone, r.type].join(' ').toLowerCase().includes(q);
+        return bySt && byTp && byQ;
+      });
+
+      tteTableBody.innerHTML = '';
+      rows.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="px-5 py-3">
+            <div class="font-semibold text-ink">${escapeHtml(item.name)}</div>
+            <div class="text-xs text-slate-500">${escapeHtml(item.email)}</div>
+          </td>
+          <td class="px-5 py-3 text-slate-700">${escapeHtml(item.institution)}</td>
+          <td class="px-5 py-3"><span class="chip bg-violet-50 text-violet-700">${escapeHtml(item.type)}</span></td>
+          <td class="px-5 py-3 text-slate-700">${item.submitted}</td>
+          <td class="px-5 py-3">
+            ${statusBadge(item.status)}
+          </td>
+          <td class="px-5 py-3">
+            <div class="flex items-center gap-2 justify-end">
+              <button class="px-3 py-1.5 rounded-lg bg-polri-blue text-white font-semibold hover:bg-polri-dark" data-view="${item.id}">Lihat</button>
+              <button class="px-3 py-1.5 rounded-lg border-2 border-rose-200 text-rose-700 font-semibold hover:bg-rose-50" data-del="${item.id}">Hapus</button>
+            </div>
+          </td>
+        `;
+        tteTableBody.appendChild(tr);
+      });
+
+      tteEmpty.classList.toggle('hidden', rows.length !== 0);
+      statTTE.textContent = tte.length;
+
+      // Today stats (simple: count items with today's date)
+      const today = new Date().toISOString().split('T')[0];
+      statToday.textContent = tte.filter(x => x.submitted === today).length;
+
+      // Actions
+      tteTableBody.querySelectorAll('[data-view]').forEach(btn => btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-view'); openTteModal(id);
+      }));
+      tteTableBody.querySelectorAll('[data-del]').forEach(btn => btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-del'); deleteTte(id);
+      }));
+    }
+
+    function renderAppts() {
+      const st = (filterApptStatus && filterApptStatus.value.trim()) || '';
+      const d = (filterApptDate && filterApptDate.value) || '';
+      const q = (searchApptInput && searchApptInput.value.trim().toLowerCase()) || '';
+
+      const rows = appts.filter(a => {
+        const bySt = !st || a.status === st;
+        const byDate = !d || a.date === d;
+        const byQ = !q || [a.name, a.institution, a.method, a.status].join(' ').toLowerCase().includes(q);
+        return bySt && byDate && byQ;
+      });
+
+      apptTableBody.innerHTML = '';
+      rows.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="px-5 py-3"><div class="font-semibold text-ink">${escapeHtml(item.name)}</div></td>
+          <td class="px-5 py-3 text-slate-700">${escapeHtml(item.institution)}</td>
+          <td class="px-5 py-3 text-slate-700">${item.date}</td>
+          <td class="px-5 py-3 text-slate-700">${item.time}</td>
+          <td class="px-5 py-3"><span class="chip bg-blue-50 text-blue-700">${escapeHtml(item.method)}</span></td>
+          <td class="px-5 py-3">${statusBadge(item.status)}</td>
+          <td class="px-5 py-3">
+            <div class="flex items-center gap-2 justify-end">
+              <button class="px-3 py-1.5 rounded-lg border-2 border-slate-200 text-slate-700 font-semibold hover:bg-slate-50" data-edit-appt="${item.id}">Edit</button>
+              <button class="px-3 py-1.5 rounded-lg border-2 border-rose-200 text-rose-700 font-semibold hover:bg-rose-50" data-del-appt="${item.id}">Hapus</button>
+            </div>
+          </td>
+        `;
+        apptTableBody.appendChild(tr);
+      });
+
+      apptEmpty.classList.toggle('hidden', rows.length !== 0);
+
+      // actions
+      apptTableBody.querySelectorAll('[data-edit-appt]').forEach(btn => btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-edit-appt'); openApptModal(id);
+      }));
+      apptTableBody.querySelectorAll('[data-del-appt]').forEach(btn => btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-del-appt'); deleteAppt(id);
+      }));
+    }
+
+    // Helpers
+    function uid(){ return Math.random().toString(36).slice(2,10) + Date.now().toString(36).slice(-4); }
+    function escapeHtml(str = '') {
+      return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+    function statusBadge(s) {
+      const map = {
+        'Baru': 'bg-blue-100 text-blue-700',
+        'Ditinjau': 'bg-amber-100 text-amber-700',
+        'Dijadwalkan': 'bg-violet-100 text-violet-700',
+        'Selesai': 'bg-emerald-100 text-emerald-700',
+        'Ditolak': 'bg-rose-100 text-rose-700'
+      };
+      const cls = map[s] || 'bg-slate-100 text-slate-700';
+      return `<span class="badge ${cls}">${s}</span>`;
+    }
+
+    // News operations
+    function openNewsModal(id=null){
+      newsForm.reset();
+      editingNewsId = null;
+      // reset preview
+      if (newsImagePreview) { newsImagePreview.src=''; newsImagePreview.style.display='none'; }
+      if (newsImageFile) { newsImageFile.value=''; }
+
+      if (!id) {
+        newsModalTitle.textContent = 'Tambah Berita';
+        newsId.value = '';
+      } else {
+        newsModalTitle.textContent = 'Edit Berita';
+        const item = news.find(n => n.id === id);
+        if (!item) return;
+        editingNewsId = id;
+        newsId.value = id;
+        newsTitle.value = item.title || '';
+        newsCategory.value = item.category || '';
+        newsStatus.value = item.status || 'Draft';
+        newsSummary.value = item.summary || '';
+        // show preview from stored data URL if exists
+        if (item.image) {
+          newsImagePreview.src = item.image;
+          newsImagePreview.style.display = 'block';
+        }
+        newsContent.value = item.content || '';
+      }
+      newsModal.classList.remove('hidden');
+      newsModal.classList.add('flex');
+    }
+    function closeNewsModal(){
+      newsModal.classList.add('hidden');
+      newsModal.classList.remove('flex');
+    }
+    function deleteNews(id){
+      if (!confirm('Hapus berita ini?')) return;
+      news = news.filter(n => n.id !== id);
+      saveNews(); renderNews(); toast('Berita dihapus');
+    }
+    function toggleNewsStatus(id){
+      const idx = news.findIndex(n => n.id === id);
+      if (idx === -1) return;
+      news[idx].status = news[idx].status === 'Draft' ? 'Published' : 'Draft';
+      saveNews(); renderNews(); toast('Status diperbarui');
+    }
+
+    // Preview selected image
+    if (newsImageFile) {
+      newsImageFile.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) { newsImagePreview.style.display='none'; return; }
+        if (file.size > 2 * 1024 * 1024) { // 2MB limit
+          alert('Ukuran file melebihi 2MB.');
+          newsImageFile.value = '';
+          newsImagePreview.style.display='none';
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          newsImagePreview.src = ev.target.result;
+          newsImagePreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    newsForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const title = newsTitle.value.trim();
+      const category = newsCategory.value;
+      const status = newsStatus.value;
+      const summary = newsSummary.value.trim();
+      const content = newsContent.value.trim();
+      if (!title || !category || !status) { alert('Mohon lengkapi minimal Judul, Kategori, dan Status.'); return; }
+      const date = new Date().toISOString().split('T')[0];
+
+      // Use preview dataURL if available (base64) for storage in localStorage
+      const imageDataUrl = (newsImagePreview && newsImagePreview.src) ? newsImagePreview.src : '';
+
+      if (editingNewsId) {
+        const idx = news.findIndex(n => n.id === editingNewsId);
+        if (idx !== -1) {
+          news[idx] = {...news[idx], title, category, status, summary, content, image: imageDataUrl };
+        }
+      } else {
+        news.unshift({ id: uid(), title, category, status, date, summary, content, image: imageDataUrl });
+      }
+      saveNews(); renderNews(); closeNewsModal(); toast('Berita disimpan');
+    });
+
+    // TTE operations
+    function openTteModal(id){
+      const item = tte.find(x => x.id === id);
+      if (!item) return;
+      currentTteId = id;
+      dName.textContent = item.name;
+      dInstansi.textContent = item.institution;
+      dEmail.textContent = item.email;
+      dPhone.textContent = item.phone;
+      dType.textContent = item.type;
+      dDate.textContent = item.submitted;
+      dDetail.textContent = item.detail || '-';
+      dStatus.value = item.status || 'Baru';
+      dNote.value = item.note || '';
+      tteModal.classList.remove('hidden');
+      tteModal.classList.add('flex');
+    }
+    function closeTteModal(){
+      tteModal.classList.add('hidden');
+      tteModal.classList.remove('flex');
+      currentTteId = null;
+    }
+    function saveTteCurrent(){
+      if (!currentTteId) return;
+      const idx = tte.findIndex(x => x.id === currentTteId);
+      if (idx === -1) return;
+      tte[idx].status = dStatus.value;
+      tte[idx].note = dNote.value.trim();
+      saveTTE(); renderTTE(); toast('Perubahan disimpan');
+      closeTteModal();
+    }
+    function deleteTteCurrent(){
+      if (!currentTteId) return;
+      if (!confirm('Hapus permohonan ini?')) return;
+      tte = tte.filter(x => x.id !== currentTteId);
+      saveTTE(); renderTTE(); toast('Permohonan dihapus');
+      closeTteModal();
+    }
+    function deleteTte(id){
+      if (!confirm('Hapus permohonan ini?')) return;
+      tte = tte.filter(x => x.id !== id);
+      saveTTE(); renderTTE(); toast('Permohonan dihapus');
+    }
+
+    // Filters events
+    [filterNewsCategory, filterNewsStatus].forEach(el => el.addEventListener('change', renderNews));
+    searchNewsInput.addEventListener('input', renderNews);
+    [filterTTEStatus, filterTTEType].forEach(el => el.addEventListener('change', renderTTE));
+    searchTTEInput.addEventListener('input', renderTTE);
+
+    // Export CSV
+    function exportCSV(arr, filename){
+      if (!arr || !arr.length) { alert('Tidak ada data untuk diekspor.'); return; }
+      const cols = Object.keys(arr[0]);
+      const esc = v => `"${String(v ?? '').replace(/"/g,'""')}"`;
+      const lines = [
+        cols.map(esc).join(','),
+        ...arr.map(row => cols.map(c => esc(row[c])).join(','))
+      ];
+      const blob = new Blob([lines.join('\n')], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `${filename}.csv`;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 500);
+    }
+
+    // Appointment ops
+    function openApptModal(id=null){
+      apptForm.reset();
+      editingApptId = null;
+      if (id){
+        const item = appts.find(a => a.id === id);
+        if (!item) return;
+        editingApptId = id;
+        apptId.value = id;
+        apptModalTitle.textContent = 'Edit Janji Temu';
+        apptName.value = item.name || '';
+        apptInstitution.value = item.institution || '';
+        apptDate.value = item.date || '';
+        apptTime.value = item.time || '';
+        apptMethod.value = item.method || 'Online';
+        apptStatus.value = item.status || 'Direncanakan';
+        apptNote.value = item.note || '';
+      } else {
+        apptModalTitle.textContent = 'Tambah Janji Temu';
+      }
+      apptModal.classList.remove('hidden');
+      apptModal.classList.add('flex');
+    }
+    function closeApptModal(){
+      apptModal.classList.add('hidden');
+      apptModal.classList.remove('flex');
+    }
+    function deleteAppt(id){
+      if (!confirm('Hapus janji temu ini?')) return;
+      appts = appts.filter(a => a.id !== id);
+      saveAppts(); renderAppts(); toast('Janji temu dihapus');
+    }
+
+    apptForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = apptName.value.trim();
+      const institution = apptInstitution.value.trim();
+      const date = apptDate.value;
+      const time = apptTime.value;
+      const method = apptMethod.value;
+      const status = apptStatus.value;
+      const note = apptNote.value.trim();
+      if (!name || !institution || !date || !time) { alert('Nama, Instansi, Tanggal, dan Waktu wajib diisi.'); return; }
+      if (editingApptId){
+        const idx = appts.findIndex(a => a.id === editingApptId);
+        if (idx !== -1) appts[idx] = {...appts[idx], name, institution, date, time, method, status, note};
+      } else {
+        appts.unshift({ id: uid(), name, institution, date, time, method, status, note });
+      }
+      saveAppts(); renderAppts(); closeApptModal(); toast('Janji temu disimpan');
+    });
+
+    // Toast
+    const toastEl = document.getElementById('toast');
+    let toastTimer = null;
+    function toast(msg='Tersimpan!'){
+      toastEl.firstElementChild.textContent = msg;
+      toastEl.classList.remove('hidden');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toastEl.classList.add('hidden'), 1600);
+    }
+
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+      loadData();
+      seedIfEmpty();
+      renderNews();
+      renderTTE();
+      renderAppts();
+      // default tab: Berita
+      switchTab('news');
+    });
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9830ff98e284cdd1',t:'MTc1ODUzNTY3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIK POLRI - Teknologi Informasi dan Komunikasi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'navy': '#1e3a8a',
+                        'navy-dark': '#1e40af',
+                        'gold': '#fbbf24',
+                        'gold-dark': '#f59e0b'
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .tech-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(251, 191, 36, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(30, 58, 138, 0.1) 0%, transparent 50%),
+                linear-gradient(45deg, transparent 49%, rgba(251, 191, 36, 0.05) 50%, transparent 51%);
+        }
+        
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(30, 58, 138, 0.2);
+        }
+        
+        .tech-grid {
+            background-image: 
+                linear-gradient(rgba(30, 58, 138, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(30, 58, 138, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 tech-pattern tech-grid font-poppins">
+    <!-- ========================================= -->
+    <!-- HOME PAGE - HALAMAN UTAMA -->
+    <!-- ========================================= -->
+    
+    <!-- Header Navigation -->
+    <header class="w-full bg-white/90 backdrop-blur-sm shadow-lg border-b-2 border-gold sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo TIK POLRI -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-navy rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8 text-gold" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                            <path d="M12 7v5l4-2-4-3z" fill="white"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-navy">TIK POLRI</h1>
+                        <p class="text-xs text-gray-600">Teknologi Informasi & Komunikasi</p>
+                    </div>
+                </div>
+                
+                <!-- Navigation Menu -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#" onclick="showLoginPage(event)" class="text-navy hover:text-gold font-semibold transition-colors duration-300 relative group">
+                        LOGIN
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" onclick="showRegisterPage(event)" class="text-navy hover:text-gold font-semibold transition-colors duration-300 relative group">
+                        REGISTER
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" onclick="showNewsPage(event)" class="text-navy hover:text-gold font-semibold transition-colors duration-300 relative group">
+                        BERITA
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#" onclick="showKonsultasiTTEPage(event)" class="text-navy hover:text-gold font-semibold transition-colors duration-300 relative group">
+                        KONSULTASI TTE
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </nav>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-navy">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col items-center justify-center px-4 py-16">
+        <!-- Welcome Section -->
+        <div class="text-center mb-16 floating-animation">
+            <div class="mb-8">
+                <div class="w-24 h-24 bg-gradient-to-br from-navy to-navy-dark rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl">
+                    <svg class="w-12 h-12 text-gold" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold text-navy mb-4 leading-tight">
+                Selamat Datang di
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-navy to-gold">
+                    TIK POLRI
+                </span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                Sistem Teknologi Informasi dan Komunikasi Kepolisian Republik Indonesia
+            </p>
+            
+            <!-- Decorative Elements -->
+            <div class="flex justify-center mt-8 space-x-4">
+                <div class="w-2 h-2 bg-gold rounded-full animate-pulse"></div>
+                <div class="w-2 h-2 bg-navy rounded-full animate-pulse" style="animation-delay: 0.2s;"></div>
+                <div class="w-2 h-2 bg-gold rounded-full animate-pulse" style="animation-delay: 0.4s;"></div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="grid md:grid-cols-2 gap-8 max-w-4xl w-full">
+            <!-- Mulai Janji Temu Button -->
+            <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 hover-scale cursor-pointer" onclick="showLoginPage()">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-navy to-navy-dark rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 4v10a2 2 0 002 2h4a2 2 0 002-2V11m-6 0h6m-6 0a2 2 0 00-2 2v8a2 2 0 002 2h4a2 2 0 002-2v-8a2 2 0 00-2-2"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-navy mb-4">MULAI JANJI TEMU</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Buat janji temu untuk layanan TIK POLRI dengan mudah dan cepat
+                    </p>
+                    <div class="bg-gradient-to-r from-navy to-navy-dark text-white px-8 py-3 rounded-full font-semibold hover:from-navy-dark hover:to-navy transition-all duration-300 inline-block">
+                        Mulai Sekarang →
+                    </div>
+                </div>
+            </div>
+
+            <!-- Konsultasi TTE Button -->
+            <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 hover-scale cursor-pointer" onclick="showKonsultasiTTEPage()">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-gold to-gold-dark rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-navy mb-4">KONSULTASI TTE</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Konsultasi Tanda Tangan Elektronik untuk kebutuhan digital Anda
+                    </p>
+                    <div class="bg-gradient-to-r from-gold to-gold-dark text-white px-8 py-3 rounded-full font-semibold hover:from-gold-dark hover:to-gold transition-all duration-300 inline-block">
+                        Konsultasi →
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technology Elements -->
+        <div class="mt-16 flex justify-center space-x-8 opacity-30">
+            <div class="w-8 h-8 border-2 border-navy rounded rotate-45 animate-spin" style="animation-duration: 8s;"></div>
+            <div class="w-6 h-6 bg-gold rounded-full animate-bounce" style="animation-delay: 1s;"></div>
+            <div class="w-4 h-4 border-2 border-gold rounded-full animate-pulse" style="animation-delay: 2s;"></div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-navy text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center space-x-3 mb-4">
+                <div class="w-8 h-8 bg-gold rounded-full flex items-center justify-center">
+                    <svg class="w-5 h-5 text-navy" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                    </svg>
+                </div>
+                <span class="text-gold font-semibold">TIK POLRI</span>
+            </div>
+            <p class="text-blue-200">© 2024 Teknologi Informasi dan Komunikasi POLRI. Semua hak dilindungi.</p>
+        </div>
+    </footer>
+
+    <!-- ========================================= -->
+    <!-- NEWS PAGE - HALAMAN BERITA -->
+    <!-- ========================================= -->
+    
+    <div id="newsPage" class="fixed inset-0 bg-gradient-to-br from-slate-50 to-blue-50 tech-pattern tech-grid z-50 hidden flex flex-col">
+        <!-- Header Navigation for News Page -->
+        <header class="w-full bg-white/90 backdrop-blur-sm shadow-lg border-b-2 border-gold">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <!-- Logo TIK POLRI -->
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-navy rounded-full flex items-center justify-center">
+                            <svg class="w-8 h-8 text-gold" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                                <path d="M12 7v5l4-2-4-3z" fill="white"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-navy">TIK POLRI</h1>
+                            <p class="text-xs text-gray-600">Berita & Informasi</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Back Button -->
+                    <button onclick="showHomePage()" class="flex items-center space-x-2 text-navy hover:text-gold font-semibold transition-colors duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                        <span>Kembali</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- News Content -->
+        <div class="flex-1 overflow-y-auto">
+            <!-- Hero Section -->
+            <div class="bg-gradient-to-r from-navy to-navy-dark text-white py-16">
+                <div class="max-w-7xl mx-auto px-4 text-center">
+                    <div class="w-20 h-20 bg-gold rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                        </svg>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Berita TIK POLRI</h1>
+                    <p class="text-xl text-blue-200 max-w-2xl mx-auto">
+                        Informasi terkini seputar perkembangan teknologi informasi dan komunikasi di lingkungan Kepolisian RI
+                    </p>
+                </div>
+            </div>
+
+            <!-- News Filter -->
+            <div class="max-w-7xl mx-auto px-4 py-8">
+                <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-6 mb-8">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
+                        <!-- Category Filter -->
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="filterNews('all')" class="news-filter-btn active bg-navy text-white px-4 py-2 rounded-lg font-medium transition-all duration-300">
+                                Semua
+                            </button>
+                            <button onclick="filterNews('teknologi')" class="news-filter-btn bg-gray-100 text-gray-700 hover:bg-navy hover:text-white px-4 py-2 rounded-lg font-medium transition-all duration-300">
+                                Teknologi
+                            </button>
+                            <button onclick="filterNews('keamanan')" class="news-filter-btn bg-gray-100 text-gray-700 hover:bg-navy hover:text-white px-4 py-2 rounded-lg font-medium transition-all duration-300">
+                                Keamanan
+                            </button>
+                            <button onclick="filterNews('sistem')" class="news-filter-btn bg-gray-100 text-gray-700 hover:bg-navy hover:text-white px-4 py-2 rounded-lg font-medium transition-all duration-300">
+                                Sistem
+                            </button>
+                            <button onclick="filterNews('pelatihan')" class="news-filter-btn bg-gray-100 text-gray-700 hover:bg-navy hover:text-white px-4 py-2 rounded-lg font-medium transition-all duration-300">
+                                Pelatihan
+                            </button>
+                        </div>
+                        
+                        <!-- Search -->
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                            </div>
+                            <input 
+                                type="text" 
+                                id="newsSearchInput"
+                                placeholder="Cari berita..."
+                                class="pl-10 pr-4 py-2 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none w-64"
+                                oninput="searchNews()"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured News -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-navy mb-6">Berita Utama</h2>
+                    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden hover-scale">
+                        <div class="md:flex">
+                            <div class="md:w-1/2">
+                                <div class="h-64 md:h-full bg-gradient-to-br from-navy to-navy-dark flex items-center justify-center">
+                                    <svg class="w-24 h-24 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="md:w-1/2 p-8">
+                                <div class="flex items-center space-x-2 mb-4">
+                                    <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">BREAKING</span>
+                                    <span class="text-gray-500 text-sm">15 Januari 2024</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-navy mb-4">Peluncuran Sistem Keamanan Siber Terbaru POLRI</h3>
+                                <p class="text-gray-600 mb-6 leading-relaxed">
+                                    TIK POLRI meluncurkan sistem keamanan siber generasi terbaru yang mampu mendeteksi dan mencegah serangan cyber dengan tingkat akurasi 99.8%. Sistem ini akan diimplementasikan di seluruh unit kepolisian Indonesia.
+                                </p>
+                                <button class="bg-gradient-to-r from-navy to-navy-dark text-white px-6 py-3 rounded-xl font-semibold hover:from-navy-dark hover:to-navy transition-all duration-300">
+                                    Baca Selengkapnya →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- News Grid -->
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-navy mb-6">Berita Terbaru</h2>
+                    <div id="newsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- News items will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Load More Button -->
+                <div class="text-center pb-8">
+                    <button class="bg-gradient-to-r from-gold to-gold-dark text-white px-8 py-3 rounded-xl font-semibold hover:from-gold-dark hover:to-gold transition-all duration-300">
+                        Muat Lebih Banyak
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- LOGIN PAGE - HALAMAN LOGIN -->
+    <!-- ========================================= -->
+    
+    <div id="loginPage" class="fixed inset-0 bg-gradient-to-br from-slate-50 to-blue-50 tech-pattern tech-grid z-50 hidden">
+        <!-- Header Navigation for Login Page -->
+        <header class="w-full bg-white/90 backdrop-blur-sm shadow-lg border-b-2 border-gold">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <!-- Logo TIK POLRI -->
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-navy rounded-full flex items-center justify-center">
+                            <svg class="w-8 h-8 text-gold" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                                <path d="M12 7v5l4-2-4-3z" fill="white"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-navy">TIK POLRI</h1>
+                            <p class="text-xs text-gray-600">Teknologi Informasi & Komunikasi</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Back Button -->
+                    <button onclick="showHomePage()" class="flex items-center space-x-2 text-navy hover:text-gold font-semibold transition-colors duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                        <span>Kembali</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Login Form Content -->
+        <div class="flex-1 flex items-center justify-center px-4 py-16">
+            <div class="max-w-md w-full">
+                <!-- Login Card -->
+                <div class="bg-white rounded-2xl shadow-2xl border border-gray-100 p-8 floating-animation">
+                    <!-- Login Header -->
+                    <div class="text-center mb-8">
+                        <div class="w-20 h-20 bg-gradient-to-br from-navy to-navy-dark rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
+                            <svg class="w-10 h-10 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                        </div>
+                        <h2 class="text-3xl font-bold text-navy mb-2">Login</h2>
+                        <p class="text-gray-600">Masuk ke sistem TIK POLRI</p>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form id="loginForm" class="space-y-6">
+                        <!-- Username Field -->
+                        <div>
+                            <label for="username" class="block text-sm font-semibold text-navy mb-2">Username</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                </div>
+                                <input 
+                                    type="text" 
+                                    id="username" 
+                                    name="username" 
+                                    required
+                                    class="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none"
+                                    placeholder="Masukkan username Anda"
+                                >
+                            </div>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div>
+                            <label for="password" class="block text-sm font-semibold text-navy mb-2">Password</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                    </svg>
+                                </div>
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password" 
+                                    required
+                                    class="w-full pl-10 pr-12 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none"
+                                    placeholder="Masukkan password Anda"
+                                >
+                                <button 
+                                    type="button" 
+                                    onclick="togglePassword()"
+                                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-navy transition-colors duration-300"
+                                >
+                                    <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Remember Me & Forgot Password -->
+                        <div class="flex items-center justify-between">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-navy border-gray-300 rounded focus:ring-navy/20">
+                                <span class="ml-2 text-sm text-gray-600">Ingat saya</span>
+                            </label>
+                            <a href="#" class="text-sm text-navy hover:text-gold transition-colors duration-300">
+                                Lupa password?
+                            </a>
+                        </div>
+
+                        <!-- Login Button -->
+                        <button 
+                            type="submit"
+                            class="w-full bg-gradient-to-r from-navy to-navy-dark text-white py-3 px-6 rounded-xl font-semibold hover:from-navy-dark hover:to-navy transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+                        >
+                            <span class="flex items-center justify-center space-x-2">
+                                <span>Login sebagai User</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                                </svg>
+                            </span>
+                        </button>
+
+                        <!-- Divider -->
+                        <div class="relative my-6">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-gray-200"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-4 bg-white text-gray-500">atau</span>
+                            </div>
+                        </div>
+
+                        <!-- Register Link -->
+                        <div class="text-center">
+                            <p class="text-gray-600">
+                                Belum memiliki akun? 
+                                <a href="#" onclick="showRegisterPage()" class="text-navy hover:text-gold font-semibold transition-colors duration-300">
+                                    Daftar sekarang
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Security Notice -->
+                <div class="mt-6 text-center">
+                    <div class="flex items-center justify-center space-x-2 text-sm text-gray-500">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                        </svg>
+                        <span>Sistem ini dilindungi dengan keamanan tingkat tinggi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- REGISTER PAGE - HALAMAN PENDAFTARAN -->
+    <!-- ========================================= -->
+    
+    <div id="registerPage" class="fixed inset-0 bg-gradient-to-br from-slate-50 to-blue-50 tech-pattern tech-grid z-50 hidden">
+        <!-- Header Navigation for Register Page -->
+        <header class="w-full bg-white/90 backdrop-blur-sm shadow-lg border-b-2 border-gold">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <!-- Logo TIK POLRI -->
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-navy rounded-full flex items-center justify-center">
+                            <svg class="w-8 h-8 text-gold" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                                <path d="M12 7v5l4-2-4-3z" fill="white"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-navy">TIK POLRI</h1>
+                            <p class="text-xs text-gray-600">Teknologi Informasi & Komunikasi</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Back Button -->
+                    <button onclick="showHomePage()" class="flex items-center space-x-2 text-navy hover:text-gold font-semibold transition-colors duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                        <span>Kembali</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Register Form Content -->
+        <div class="flex-1 flex items-center justify-center px-4 py-8 overflow-y-auto">
+            <div class="max-w-lg w-full">
+                <!-- Register Card -->
+                <div class="bg-white rounded-2xl shadow-2xl border border-gray-100 p-8 floating-animation">
+                    <!-- Register Header -->
+                    <div class="text-center mb-8">
+                        <div class="w-20 h-20 bg-gradient-to-br from-gold to-gold-dark rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
+                            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                            </svg>
+                        </div>
+                        <h2 class="text-3xl font-bold text-navy mb-2">Daftar Akun</h2>
+                        <p class="text-gray-600">Buat akun baru untuk mengakses sistem TIK POLRI</p>
+                    </div>
+
+                    <!-- Register Form -->
+                    <form id="registerForm" class="space-y-6">
+                        <!-- Nama Field -->
+                        <div>
+                            <label for="nama" class="block text-sm font-semibold text-navy mb-2">Nama Lengkap</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                </div>
+                                <input 
+                                    type="text" 
+                                    id="nama" 
+                                    name="nama" 
+                                    required
+                                    class="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none"
+                                    placeholder="Masukkan nama lengkap Anda"
+                                >
+                            </div>
+                        </div>
+
+                        <!-- Instansi Field -->
+                        <div>
+                            <label for="instansi" class="block text-sm font-semibold text-navy mb-2">Instansi</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                    </svg>
+                                </div>
+                                <select 
+                                    id="instansi" 
+                                    name="instansi" 
+                                    required
+                                    class="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none appearance-none bg-white"
+                                >
+                                    <option value="">Pilih Instansi</option>
+                                    <option value="Pemerintahan">Pemerintahan</option>
+                                    <option value="TNI">TNI</option>
+                                    <option value="Kepolisian">Kepolisian</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Jabatan Field -->
+                        <div>
+                            <label for="jabatan" class="block text-sm font-semibold text-navy mb-2">Jabatan</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0H8m8 0v2a2 2 0 01-2 2H10a2 2 0 01-2-2V6"/>
+                                    </svg>
+                                </div>
+                                <input 
+                                    type="text" 
+                                    id="jabatan" 
+                                    name="jabatan" 
+                                    required
+                                    class="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none"
+                                    placeholder="Masukkan jabatan Anda"
+                                >
+                            </div>
+                        </div>
+
+                        <!-- Pangkat Field -->
+                        <div>
+                            <label for="pangkat" class="block text-sm font-semibold text-navy mb-2">Pangkat</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                                    </svg>
+                                </div>
+                                <input 
+                                    type="text" 
+                                    id="pangkat" 
+                                    name="pangkat" 
+                                    required
+                                    class="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none"
+                                    placeholder="Masukkan pangkat Anda"
+                                >
+                            </div>
+                        </div>
+
+                        <!-- NRP/NIK Field -->
+                        <div>
+                            <label for="nrp_nik" class="block text-sm font-semibold text-navy mb-2">NRP/NIK</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V4a2 2 0 114 0v2m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>
+                                    </svg>
+                                </div>
+                                <input 
+                                    type="text" 
+                                    id="nrp_nik" 
+                                    name="nrp_nik" 
+                                    required
+                                    class="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none"
+                                    placeholder="Masukkan NRP/NIK Anda"
+                                >
+                            </div>
+                        </div>
+
+                        <!-- Register Button -->
+                        <button 
+                            type="submit"
+                            class="w-full bg-gradient-to-r from-gold to-gold-dark text-white py-3 px-6 rounded-xl font-semibold hover:from-gold-dark hover:to-gold transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+                        >
+                            <span class="flex items-center justify-center space-x-2">
+                                <span>Daftar</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                                </svg>
+                            </span>
+                        </button>
+
+                        <!-- Divider -->
+                        <div class="relative my-6">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-gray-200"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-4 bg-white text-gray-500">atau</span>
+                            </div>
+                        </div>
+
+                        <!-- Login Link -->
+                        <div class="text-center">
+                            <p class="text-gray-600">
+                                Sudah memiliki akun? 
+                                <a href="#" onclick="showLoginPage()" class="text-navy hover:text-gold font-semibold transition-colors duration-300">
+                                    Login sekarang
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Security Notice -->
+                <div class="mt-6 text-center">
+                    <div class="flex items-center justify-center space-x-2 text-sm text-gray-500">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                        </svg>
+                        <span>Data Anda akan diverifikasi oleh admin TIK POLRI</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- APPOINTMENT PAGE - HALAMAN JANJI TEMU -->
+    <!-- ========================================= -->
+    
+    <div id="appointmentPage" class="fixed inset-0 bg-gradient-to-br from-slate-50 to-blue-50 tech-pattern tech-grid z-50 hidden flex flex-col">
+        <!-- Header Navigation for Appointment Page -->
+        <header class="w-full bg-white/90 backdrop-blur-sm shadow-lg border-b-2 border-gold">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <!-- Logo TIK POLRI -->
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-navy rounded-full flex items-center justify-center">
+                            <svg class="w-8 h-8 text-gold" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                                <path d="M12 7v5l4-2-4-3z" fill="white"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-navy">TIK POLRI</h1>
+                            <p class="text-xs text-gray-600">Manajemen Janji Temu</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation -->
+                    <div class="flex items-center space-x-4">
+                        <span class="text-navy font-medium">Selamat datang, User</span>
+                        <button onclick="showHomePage()" class="flex items-center space-x-2 text-navy hover:text-gold font-semibold transition-colors duration-300">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                            </svg>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Appointment Content -->
+        <div class="flex-1 p-6 overflow-y-auto">
+            <div class="max-w-7xl mx-auto">
+                <!-- Page Header -->
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-navy mb-2">Manajemen Janji Temu</h1>
+                    <p class="text-gray-600">Kelola jadwal janji temu dengan TIK POLRI</p>
+                </div>
+
+                <!-- Action Bar -->
+                <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-6 mb-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+                        <div class="flex items-center space-x-4">
+                            <button 
+                                onclick="showAddAppointmentModal()"
+                                class="bg-gradient-to-r from-navy to-navy-dark text-white px-6 py-3 rounded-xl font-semibold hover:from-navy-dark hover:to-navy transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center space-x-2"
+                            >
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                </svg>
+                                <span>Tambah Janji Temu</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Search Bar -->
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                            </div>
+                            <input 
+                                type="text" 
+                                id="searchInput"
+                                placeholder="Cari janji temu..."
+                                class="pl-10 pr-4 py-2 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none w-64"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Appointments Table -->
+                <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gradient-to-r from-navy to-navy-dark text-white">
+                                <tr>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold">No</th>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold">Tanggal</th>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold">Nama</th>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold">Keperluan</th>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold">Status</th>
+                                    <th class="px-6 py-4 text-center text-sm font-semibold">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appointmentTableBody" class="divide-y divide-gray-200">
+                                <!-- Sample data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="hidden text-center py-12">
+                    <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 4v10a2 2 0 002 2h4a2 2 0 002-2V11m-6 0h6m-6 0a2 2 0 00-2 2v8a2 2 0 002 2h4a2 2 0 002-2v-8a2 2 0 00-2-2"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-600 mb-2">Belum ada janji temu</h3>
+                    <p class="text-gray-500 mb-6">Mulai dengan menambahkan janji temu pertama Anda</p>
+                    <button 
+                        onclick="showAddAppointmentModal()"
+                        class="bg-gradient-to-r from-navy to-navy-dark text-white px-6 py-3 rounded-xl font-semibold hover:from-navy-dark hover:to-navy transition-all duration-300"
+                    >
+                        Tambah Janji Temu
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- KONSULTASI TTE PAGE - HALAMAN KONSULTASI -->
+    <!-- ========================================= -->
+
+    <div id="konsultasiTTEPage" class="fixed inset-0 bg-gradient-to-br from-slate-50 to-blue-50 tech-pattern tech-grid z-50 hidden flex flex-col">
+        <!-- Header Navigation for Konsultasi Page -->
+        <header class="w-full bg-white/90 backdrop-blur-sm shadow-lg border-b-2 border-gold">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <!-- Logo TIK POLRI -->
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-navy rounded-full flex items-center justify-center">
+                            <svg class="w-8 h-8 text-gold" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                                <path d="M12 7v5l4-2-4-3z" fill="white"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-navy">TIK POLRI</h1>
+                            <p class="text-xs text-gray-600">Konsultasi Tanda Tangan Elektronik</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Back Button -->
+                    <button onclick="showHomePage()" class="flex items-center space-x-2 text-navy hover:text-gold font-semibold transition-colors duration-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                        <span>Kembali</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Wrapper for Konsultasi -->
+        <div class="flex-1 overflow-y-auto">
+            <!-- Hero Section -->
+            <section class="bg-gradient-to-r from-gold to-gold-dark text-white py-20">
+                <div class="max-w-7xl mx-auto px-4 text-center">
+                    <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl floating-animation">
+                        <svg class="w-12 h-12 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                    </div>
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6">Konsultasi Tanda Tangan Elektronik</h1>
+                    <p class="text-xl text-yellow-100 max-w-3xl mx-auto mb-8">
+                        Dapatkan konsultasi profesional untuk implementasi TTE yang aman, terpercaya, dan sesuai dengan standar nasional
+                    </p>
+                    <button onclick="scrollToForm()" class="bg-white text-gold-dark px-8 py-4 rounded-2xl font-bold text-lg hover:bg-yellow-50 transform hover:scale-105 transition-all duration-300 shadow-xl">
+                        Mulai Konsultasi →
+                    </button>
+                </div>
+            </section>
+
+            <!-- Process Steps -->
+            <section class="py-20">
+                <div class="max-w-7xl mx-auto px-4">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl font-bold text-navy-dark mb-4">Proses Konsultasi TTE</h2>
+                        <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+                            Ikuti langkah mudah untuk mendapatkan konsultasi TTE yang sesuai dengan kebutuhan Anda
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-4 gap-8">
+                        <!-- Step 1 -->
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-gradient-to-br from-navy to-navy-dark rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
+                                <span class="text-2xl font-bold text-gold">1</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-navy-dark mb-3">Isi Formulir</h3>
+                            <p class="text-gray-600">Lengkapi formulir konsultasi dengan informasi yang diperlukan</p>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-gradient-to-br from-navy to-navy-dark rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
+                                <span class="text-2xl font-bold text-gold">2</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-navy-dark mb-3">Analisis Kebutuhan</h3>
+                            <p class="text-gray-600">Tim ahli akan menganalisis kebutuhan TTE institusi Anda</p>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-gradient-to-br from-navy to-navy-dark rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
+                                <span class="text-2xl font-bold text-gold">3</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-navy-dark mb-3">Konsultasi</h3>
+                            <p class="text-gray-600">Sesi konsultasi dengan pakar TTE untuk solusi terbaik</p>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-gradient-to-br from-navy to-navy-dark rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
+                                <span class="text-2xl font-bold text-gold">4</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-navy-dark mb-3">Implementasi</h3>
+                            <p class="text-gray-600">Panduan implementasi dan dukungan teknis berkelanjutan</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Consultation Form -->
+            <section id="consultationForm" class="py-20 bg-white">
+                <div class="max-w-4xl mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 class="text-4xl font-bold text-navy-dark mb-4">Formulir Konsultasi TTE</h2>
+                        <p class="text-gray-600 text-lg">
+                            Isi formulir di bawah ini untuk memulai konsultasi TTE dengan tim ahli kami
+                        </p>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-2xl border border-gray-100 p-8">
+                        <form id="tteConsultationForm" class="space-y-6">
+                            <!-- Personal Information -->
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="fullName" class="block text-sm font-semibold text-navy-dark mb-2">Nama Lengkap *</label>
+                                    <input 
+                                        type="text" 
+                                        id="fullName" 
+                                        name="fullName" 
+                                        required
+                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none"
+                                        placeholder="Masukkan nama lengkap"
+                                    >
+                                </div>
+                                <div>
+                                    <label for="position" class="block text-sm font-semibold text-navy-dark mb-2">Jabatan *</label>
+                                    <input 
+                                        type="text" 
+                                        id="position" 
+                                        name="position" 
+                                        required
+                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none"
+                                        placeholder="Masukkan jabatan"
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Institution Information -->
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="institution" class="block text-sm font-semibold text-navy-dark mb-2">Nama Institusi *</label>
+                                    <input 
+                                        type="text" 
+                                        id="institution" 
+                                        name="institution" 
+                                        required
+                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none"
+                                        placeholder="Masukkan nama institusi"
+                                    >
+                                </div>
+                                <div>
+                                    <label for="institutionType" class="block text-sm font-semibold text-navy-dark mb-2">Jenis Institusi *</label>
+                                    <select 
+                                        id="institutionType" 
+                                        name="institutionType" 
+                                        required
+                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none appearance-none bg-white"
+                                    >
+                                        <option value="">Pilih jenis institusi</option>
+                                        <option value="pemerintah">Pemerintahan</option>
+                                        <option value="tni">TNI</option>
+                                        <option value="polri">POLRI</option>
+                                        <option value="bumn">BUMN</option>
+                                        <option value="swasta">Swasta</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Contact Information -->
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="email" class="block text-sm font-semibold text-navy-dark mb-2">Email *</label>
+                                    <input 
+                                        type="email" 
+                                        id="email" 
+                                        name="email" 
+                                        required
+                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none"
+                                        placeholder="nama@institusi.go.id"
+                                    >
+                                </div>
+                                <div>
+                                    <label for="phone" class="block text-sm font-semibold text-navy-dark mb-2">Nomor Telepon *</label>
+                                    <input 
+                                        type="tel" 
+                                        id="phone" 
+                                        name="phone" 
+                                        required
+                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none"
+                                        placeholder="08xxxxxxxxxx"
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Consultation Details -->
+                            <div>
+                                <label for="consultationDetails" class="block text-sm font-semibold text-navy-dark mb-2">Detail Kebutuhan Konsultasi *</label>
+                                <textarea 
+                                    id="consultationDetails" 
+                                    name="consultationDetails" 
+                                    required
+                                    rows="5"
+                                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none resize-none"
+                                    placeholder="Jelaskan secara detail kebutuhan konsultasi TTE Anda..."
+                                ></textarea>
+                            </div>
+                            
+                            <!-- Agreement -->
+                            <div class="bg-gray-50 rounded-xl p-6">
+                                <label class="flex items-start space-x-3">
+                                    <input type="checkbox" id="agreement" name="agreement" required class="mt-1 text-navy">
+                                    <div class="text-sm text-gray-600">
+                                        <span class="font-semibold">Saya menyetujui</span> bahwa informasi yang saya berikan adalah benar dan dapat digunakan oleh TIK POLRI untuk keperluan konsultasi TTE.
+                                    </div>
+                                </label>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="text-center pt-6">
+                                <button 
+                                    type="submit"
+                                    class="bg-gradient-to-r from-gold to-gold-dark text-white px-12 py-4 rounded-2xl font-bold text-lg hover:from-gold-dark hover:to-gold transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
+                                >
+                                    <span class="flex items-center justify-center space-x-3">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                                        </svg>
+                                        <span>Kirim Permohonan</span>
+                                    </span>
+                                </button>
+                                <p class="text-sm text-gray-500 mt-4">
+                                    Tim kami akan menghubungi Anda dalam 1x24 jam.
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- MODALS -->
+    <!-- ========================================= -->
+    
+    <!-- Add/Edit Appointment Modal -->
+    <div id="appointmentModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-60 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <!-- Modal Header -->
+                <div class="flex justify-between items-center mb-6">
+                    <h3 id="modalTitle" class="text-2xl font-bold text-navy">Tambah Janji Temu</h3>
+                    <button onclick="closeAppointmentModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Modal Form -->
+                <form id="appointmentForm" class="space-y-4">
+                    <input type="hidden" id="appointmentId" name="id">
+                    
+                    <!-- Tanggal -->
+                    <div>
+                        <label for="appointmentDate" class="block text-sm font-semibold text-navy mb-2">Tanggal</label>
+                        <input 
+                            type="date" 
+                            id="appointmentDate" 
+                            name="date" 
+                            required
+                            class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none"
+                        >
+                    </div>
+
+                    <!-- Nama -->
+                    <div>
+                        <label for="appointmentName" class="block text-sm font-semibold text-navy mb-2">Nama</label>
+                        <input 
+                            type="text" 
+                            id="appointmentName" 
+                            name="name" 
+                            required
+                            class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none"
+                            placeholder="Masukkan nama"
+                        >
+                    </div>
+
+                    <!-- Keperluan -->
+                    <div>
+                        <label for="appointmentPurpose" class="block text-sm font-semibold text-navy mb-2">Keperluan</label>
+                        <textarea 
+                            id="appointmentPurpose" 
+                            name="purpose" 
+                            required
+                            rows="3"
+                            class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none resize-none"
+                            placeholder="Jelaskan keperluan Anda"
+                        ></textarea>
+                    </div>
+
+                    <!-- Status -->
+                    <div>
+                        <label for="appointmentStatus" class="block text-sm font-semibold text-navy mb-2">Status</label>
+                        <select 
+                            id="appointmentStatus" 
+                            name="status" 
+                            required
+                            class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-navy focus:ring-2 focus:ring-navy/20 transition-all duration-300 outline-none appearance-none bg-white"
+                        >
+                            <option value="Menunggu">Menunggu</option>
+                            <option value="Disetujui">Disetujui</option>
+                            <option value="Ditolak">Ditolak</option>
+                            <option value="Selesai">Selesai</option>
+                        </select>
+                    </div>
+
+                    <!-- Modal Actions -->
+                    <div class="flex space-x-3 pt-4">
+                        <button 
+                            type="button"
+                            onclick="closeAppointmentModal()"
+                            class="flex-1 bg-gray-200 text-gray-700 py-3 px-6 rounded-xl font-semibold hover:bg-gray-300 transition-all duration-300"
+                        >
+                            Batal
+                        </button>
+                        <button 
+                            type="submit"
+                            class="flex-1 bg-gradient-to-r from-navy to-navy-dark text-white py-3 px-6 rounded-xl font-semibold hover:from-navy-dark hover:to-navy transition-all duration-300"
+                        >
+                            Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- TTE Consultation Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-60 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 text-center">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-navy-dark mb-4">Permohonan Berhasil Dikirim!</h3>
+            <p class="text-gray-600 mb-6">
+                Terima kasih atas permohonan konsultasi TTE Anda. Tim kami akan menghubungi Anda dalam 1x24 jam untuk konfirmasi jadwal.
+            </p>
+            <button onclick="closeSuccessModal()" class="bg-gradient-to-r from-navy to-navy-dark text-white px-8 py-3 rounded-xl font-semibold hover:from-navy-dark hover:to-navy transition-all duration-300">
+                Tutup
+            </button>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- JAVASCRIPT - FUNGSI DAN LOGIKA APLIKASI -->
+    <!-- ========================================= -->
+    
+    <script>
+        // Global variables
+        let appointments = [
+            { id: 1, date: '2024-01-15', name: 'Ahmad Wijaya', purpose: 'Konsultasi sistem keamanan jaringan', status: 'Menunggu' },
+            { id: 2, date: '2024-01-16', name: 'Siti Nurhaliza', purpose: 'Pembuatan akun email resmi', status: 'Disetujui' },
+            { id: 3, date: '2024-01-17', name: 'Budi Santoso', purpose: 'Troubleshooting aplikasi internal', status: 'Selesai' }
+        ];
+        let nextId = 4;
+        let editingId = null;
+
+        // News data
+        let newsData = [
+            { id: 1, title: 'Implementasi AI dalam Sistem Kepolisian', excerpt: 'TIK POLRI mengintegrasikan teknologi AI untuk meningkatkan efisiensi operasional.', category: 'teknologi', date: '2024-01-14' },
+            { id: 2, title: 'Pelatihan Keamanan Siber untuk Personel POLRI', excerpt: 'Program pelatihan untuk meningkatkan kemampuan personel menghadapi ancaman siber.', category: 'pelatihan', date: '2024-01-13' },
+            { id: 3, title: 'Upgrade Sistem Database Nasional', excerpt: 'Modernisasi database untuk meningkatkan kecepatan dan keamanan data.', category: 'sistem', date: '2024-01-12' },
+            { id: 4, title: 'Protokol Keamanan Baru untuk Data Sensitif', excerpt: 'Implementasi protokol keamanan berlapis untuk melindungi data sensitif.', category: 'keamanan', date: '2024-01-11' },
+            { id: 5, title: 'Digitalisasi Layanan Publik POLRI', excerpt: 'Transformasi digital layanan publik untuk kemudahan akses masyarakat.', category: 'sistem', date: '2024-01-10' },
+            { id: 6, title: 'Workshop Teknologi Blockchain untuk Investigasi', excerpt: 'Pelatihan penggunaan blockchain dalam proses investigasi.', category: 'pelatihan', date: '2024-01-09' }
+        ];
+
+        // ===== PAGE NAVIGATION FUNCTIONS =====
+        function hideAllPages() {
+            document.querySelectorAll('.fixed.inset-0').forEach(page => page.classList.add('hidden'));
+            document.querySelector('main').classList.add('hidden');
+        }
+
+        function showHomePage() {
+            hideAllPages();
+            document.querySelector('main').classList.remove('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function showPage(pageId) {
+            hideAllPages();
+            document.getElementById(pageId).classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Disable body scroll for all overlay pages
+        }
+
+        function showLoginPage(e) {
+            if (e) e.preventDefault();
+            showPage('loginPage');
+        }
+
+        function showRegisterPage(e) {
+            if (e) e.preventDefault();
+            showPage('registerPage');
+        }
+
+        function showNewsPage(e) {
+            if (e) e.preventDefault();
+            showPage('newsPage');
+            renderNews();
+        }
+
+        function showAppointmentPage() {
+            showPage('appointmentPage');
+            renderAppointments();
+        }
+
+        function showKonsultasiTTEPage(e) {
+            if (e) e.preventDefault();
+            showPage('konsultasiTTEPage');
+            initializeConsultationPage();
+        }
+
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/>`;
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>`;
+            }
+        }
+
+        // ===== NEWS FUNCTIONS =====
+        function renderNews(filteredNews = null) {
+            const newsGrid = document.getElementById('newsGrid');
+            const newsToRender = filteredNews || newsData;
+            newsGrid.innerHTML = newsToRender.map(news => `
+                <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover-scale">
+                    <div class="h-48 bg-gradient-to-br from-navy to-navy-dark flex items-center justify-center">
+                        <svg class="w-16 h-16 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">${getCategoryIcon(news.category)}</svg>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-${getCategoryColor(news.category)}-100 text-${getCategoryColor(news.category)}-800 px-3 py-1 rounded-full text-sm font-semibold capitalize">${news.category}</span>
+                            <span class="text-gray-500 text-sm">${formatDate(news.date)}</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-navy mb-3 line-clamp-2">${news.title}</h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">${news.excerpt}</p>
+                        <button class="text-navy hover:text-gold font-semibold transition-colors duration-300 flex items-center space-x-1">
+                            <span>Baca Selengkapnya</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>`).join('');
+        }
+        function getCategoryIcon(category) {
+            const icons = {
+                teknologi: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>',
+                keamanan: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>',
+                sistem: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>',
+                pelatihan: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>',
+            }; return icons[category] || icons.teknologi;
+        }
+        function getCategoryColor(category) {
+            const colors = { teknologi: 'blue', keamanan: 'green', sistem: 'purple', pelatihan: 'orange' };
+            return colors[category] || 'blue';
+        }
+        function filterNews(category) {
+            document.querySelectorAll('.news-filter-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-navy', 'text-white');
+                btn.classList.add('bg-gray-100', 'text-gray-700');
+            });
+            event.target.classList.add('active', 'bg-navy', 'text-white');
+            event.target.classList.remove('bg-gray-100', 'text-gray-700');
+            const filtered = category === 'all' ? newsData : newsData.filter(news => news.category === category);
+            renderNews(filtered);
+        }
+        function searchNews() {
+            const searchTerm = document.getElementById('newsSearchInput').value.toLowerCase();
+            const filtered = newsData.filter(news => news.title.toLowerCase().includes(searchTerm) || news.excerpt.toLowerCase().includes(searchTerm));
+            renderNews(filtered);
+        }
+
+        // ===== APPOINTMENT MANAGEMENT FUNCTIONS =====
+        function renderAppointments(data = appointments) {
+            const tbody = document.getElementById('appointmentTableBody');
+            const emptyState = document.getElementById('emptyState');
+            if (data.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            emptyState.classList.add('hidden');
+            tbody.innerHTML = data.map((appointment, index) => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 text-sm text-gray-900">${index + 1}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900">${formatDate(appointment.date)}</td>
+                    <td class="px-6 py-4 text-sm font-medium text-gray-900">${appointment.name}</td>
+                    <td class="px-6 py-4 text-sm text-gray-600 max-w-xs truncate">${appointment.purpose}</td>
+                    <td class="px-6 py-4"><span class="inline-flex px-3 py-1 text-xs font-semibold rounded-full ${getStatusClass(appointment.status)}">${appointment.status}</span></td>
+                    <td class="px-6 py-4 text-center"><div class="flex justify-center space-x-2">
+                        <button onclick="editAppointment(${appointment.id})" class="text-navy hover:text-gold p-1" title="Edit"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+                        <button onclick="deleteAppointment(${appointment.id})" class="text-red-600 hover:text-red-800 p-1" title="Hapus"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
+                    </div></td>
+                </tr>`).join('');
+        }
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+        }
+        function getStatusClass(status) {
+            const classes = { 'Menunggu': 'bg-yellow-100 text-yellow-800', 'Disetujui': 'bg-blue-100 text-blue-800', 'Ditolak': 'bg-red-100 text-red-800', 'Selesai': 'bg-green-100 text-green-800' };
+            return classes[status] || 'bg-gray-100 text-gray-800';
+        }
+        function showAddAppointmentModal() {
+            editingId = null;
+            document.getElementById('modalTitle').textContent = 'Tambah Janji Temu';
+            document.getElementById('appointmentForm').reset();
+            document.getElementById('appointmentModal').classList.remove('hidden');
+        }
+        function editAppointment(id) {
+            const appointment = appointments.find(a => a.id === id);
+            if (!appointment) return;
+            editingId = id;
+            document.getElementById('modalTitle').textContent = 'Edit Janji Temu';
+            document.getElementById('appointmentId').value = appointment.id;
+            document.getElementById('appointmentDate').value = appointment.date;
+            document.getElementById('appointmentName').value = appointment.name;
+            document.getElementById('appointmentPurpose').value = appointment.purpose;
+            document.getElementById('appointmentStatus').value = appointment.status;
+            document.getElementById('appointmentModal').classList.remove('hidden');
+        }
+        function deleteAppointment(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus janji temu ini?')) {
+                appointments = appointments.filter(a => a.id !== id);
+                renderAppointments();
+            }
+        }
+        function closeAppointmentModal() {
+            document.getElementById('appointmentModal').classList.add('hidden');
+            editingId = null;
+        }
+
+        // ===== KONSULTASI TTE FUNCTIONS =====
+        function initializeConsultationPage() {
+            const today = new Date().toISOString().split('T')[0];
+            const preferredDateField = document.getElementById('preferredDate');
+            if(preferredDateField) preferredDateField.setAttribute('min', today);
+        }
+        function scrollToForm() {
+            const formSection = document.getElementById('consultationForm');
+            if(formSection) {
+                 formSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.add('hidden');
+        }
+
+        // ===== EVENT HANDLERS DAN INITIALIZATION =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial call to hide sub-pages and show home
+            showHomePage();
+
+            // Handle login form submission
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const button = this.querySelector('button[type="submit"]');
+                button.innerHTML = `<span>Memproses...</span>`;
+                button.disabled = true;
+                setTimeout(() => {
+                    button.innerHTML = `<span>Login sebagai User</span>`;
+                    button.disabled = false;
+                    showAppointmentPage();
+                    this.reset();
+                }, 1500);
+            });
+
+            // Handle register form submission
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const button = this.querySelector('button[type="submit"]');
+                button.innerHTML = `<span>Mendaftar...</span>`;
+                button.disabled = true;
+                setTimeout(() => {
+                    alert(`Pendaftaran berhasil! Akun Anda menunggu verifikasi admin.`);
+                    button.innerHTML = `<span>Daftar</span>`;
+                    button.disabled = false;
+                    showLoginPage();
+                    this.reset();
+                }, 1500);
+            });
+
+            // Handle appointment form submission
+            document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData);
+                data.id = editingId ? editingId : nextId++;
+                if (editingId) {
+                    const index = appointments.findIndex(a => a.id === editingId);
+                    if (index !== -1) appointments[index] = data;
+                } else {
+                    appointments.push(data);
+                }
+                renderAppointments();
+                closeAppointmentModal();
+            });
+
+            // Handle search appointment input
+            document.getElementById('searchInput').addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const filtered = appointments.filter(app => app.name.toLowerCase().includes(searchTerm) || app.purpose.toLowerCase().includes(searchTerm));
+                renderAppointments(filtered);
+            });
+
+            // Handle TTE consultation form submission
+            document.getElementById('tteConsultationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const submitButton = this.querySelector('button[type="submit"]');
+                const originalText = submitButton.innerHTML;
+                submitButton.innerHTML = `<span>Mengirim...</span>`;
+                submitButton.disabled = true;
+                setTimeout(() => {
+                    submitButton.innerHTML = originalText;
+                    submitButton.disabled = false;
+                    document.getElementById('successModal').classList.remove('hidden');
+                    this.reset();
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
