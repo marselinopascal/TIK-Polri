@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Consultation; 
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -25,9 +26,52 @@ class PageController extends Controller
             'latest_news' => $newsData->slice(1)
         ]);
     }
-
-    public function consultation()
+ public function consultation()
     {
         return view('pages.consultation');
+    }
+    
+    public function storeConsultation(Request $request)
+    {
+        $validated = $request->validate([
+            'fullName' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
+            'institution' => 'required|string|max:255',
+            'institutionType' => 'required|string',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+            'consultationDetails' => 'required|string',
+        ]);
+
+        Consultation::create([
+            'name' => $validated['fullName'],
+            'institution' => $validated['institution'],
+            'type' => $validated['institutionType'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'details' => $validated['consultationDetails'],
+            'status' => 'Baru', // Status default saat pertama kali dibuat
+        ]);
+
+        return back()->with('success', 'Permohonan konsultasi Anda telah berhasil dikirim! Tim kami akan segera meninjau.');
+    }
+     public function showNews(News $news)
+    {
+        // Pastikan hanya berita yang sudah di-publish yang bisa diakses
+        if ($news->status !== 'Published') {
+            abort(404);
+        }
+
+        // Ambil 3 berita lainnya sebagai "Berita Terkait"
+        $relatedNews = News::where('status', 'Published')
+                            ->where('id', '!=', $news->id)
+                            ->latest()
+                            ->take(3)
+                            ->get();
+
+        return view('pages.news-show', [
+            'news' => $news,
+            'relatedNews' => $relatedNews
+        ]);
     }
 }

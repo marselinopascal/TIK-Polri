@@ -60,7 +60,7 @@
             </td>
             <td class="px-5 py-3 text-slate-500">{{ $item->created_at->isoFormat('D MMMM YYYY') }}</td>
             <td class="px-5 py-3 text-right">
-              <a href="#" class="font-semibold text-blue-600 hover:underline">Edit</a>
+             <a href="{{ route('admin.news.edit', $item->id) }}" class="font-semibold text-blue-600 hover:underline">Edit</a>
             </td>
           </tr>
           @empty
@@ -94,7 +94,7 @@
             <td class="px-5 py-3">{{ $item->institution }}</td>
             <td class="px-5 py-3 text-slate-500">{{ $item->created_at->isoFormat('D MMMM YYYY') }}</td>
             <td class="px-5 py-3"><span class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-700">{{ $item->status }}</span></td>
-            <td class="px-5 py-3 text-right"><a href="#" class="font-semibold text-blue-600 hover:underline">Lihat Detail</a></td>
+            <td class="px-5 py-3 text-right"><a href="{{ route('admin.consultations.show', $item->id) }}" class="font-semibold text-blue-600 hover:underline">Lihat Detail</a></td>
           </tr>
           @empty
           <tr><td colspan="5" class="p-8 text-center text-slate-500">Belum ada konsultasi TTE.</td></tr>
@@ -127,7 +127,7 @@
             <td class="px-5 py-3 text-slate-500">{{ \Carbon\Carbon::parse($item->date)->isoFormat('D MMMM YYYY') }}</td>
             <td class="px-5 py-3 text-slate-500 truncate max-w-xs">{{ $item->purpose }}</td>
             <td class="px-5 py-3"><span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-700">{{ $item->status }}</span></td>
-            <td class="px-5 py-3 text-right"><a href="#" class="font-semibold text-blue-600 hover:underline">Lihat Detail</a></td>
+           <td class="px-5 py-3 text-right"><a href="{{ route('admin.appointments.show', $item->id) }}" class="font-semibold text-blue-600 hover:underline">Lihat Detail</a></td>
           </tr>
           @empty
           <tr><td colspan="5" class="p-8 text-center text-slate-500">Belum ada janji temu.</td></tr>
